@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAP Security Patch Day - May 2026</title>
+    <title>SAP Security Patch Day - June 2026</title>
     <style>
         :root {
             --sap-blue: #0070f2;
@@ -39,10 +39,8 @@
             line-height: 1.6;
             transition: background 0.3s, color 0.3s;
         }
-
-        /* Header */
         .header {
-            background: linear-gradient(135deg, #0070f2 0%, #004d99 100%);
+            background: linear-gradient(135deg, #bb0000 0%, #7a0000 100%);
             color: white; padding: 24px 32px;
         }
         .header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
@@ -50,17 +48,15 @@
         .header .subtitle { font-size: 12px; opacity: 0.8; margin-top: 4px; }
         .header-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .badge { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 11px; white-space: nowrap; }
-        .badge-alert { background: #d32f2f; color: white; }
+        .badge-alert { background: #ff6b6b; color: white; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.7; } }
         .theme-toggle {
             background: rgba(255,255,255,0.2); border: none; color: white;
             width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px;
             display: flex; align-items: center; justify-content: center;
         }
         .theme-toggle:hover { background: rgba(255,255,255,0.3); }
-
         .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-
-        /* Stats */
         .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 20px; }
         .stat-card {
             background: var(--card-bg); border-radius: 10px; padding: 14px 10px;
@@ -82,21 +78,17 @@
         .stat-card.affected .number { color: var(--affected); }
         .stat-card.safe .number { color: var(--safe); }
         .stat-card .label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
-
-        /* Pure CSS Charts */
         .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
         .chart-card { background: var(--card-bg); border-radius: 10px; padding: 16px; box-shadow: var(--card-shadow); }
         .chart-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 14px; color: var(--text-primary); }
-
-        /* Donut chart */
         .donut-wrap { display: flex; align-items: center; gap: 20px; }
         .donut {
             width: 120px; height: 120px; border-radius: 50%; flex-shrink: 0;
             background: conic-gradient(
-                var(--critical) 0deg 42deg,
-                var(--high) 42deg 63deg,
-                var(--medium) 63deg 339deg,
-                var(--low) 339deg 360deg
+                var(--critical) 0deg 96deg,
+                var(--high) 96deg 144deg,
+                var(--medium) 144deg 312deg,
+                var(--low) 312deg 360deg
             );
             display: flex; align-items: center; justify-content: center;
         }
@@ -109,16 +101,12 @@
         .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px; }
         .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
         .legend-val { margin-left: auto; font-weight: 700; }
-
-        /* Bar chart */
         .bar-chart { display: flex; flex-direction: column; gap: 10px; }
         .bar-item { display: flex; align-items: center; gap: 10px; }
         .bar-label { width: 50px; font-size: 12px; font-weight: 600; text-align: right; flex-shrink: 0; }
         .bar-track { flex: 1; height: 24px; background: rgba(0,0,0,0.06); border-radius: 6px; overflow: hidden; position: relative; }
         .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 700; color: white; min-width: 28px; transition: width 0.6s ease; }
         [data-theme="dark"] .bar-track { background: rgba(255,255,255,0.06); }
-
-        /* Section */
         .section-title {
             font-size: 15px; font-weight: 600; margin-bottom: 12px;
             padding-left: 12px; border-left: 4px solid var(--sap-blue);
@@ -130,8 +118,6 @@
             border-radius: 12px; font-weight: 500;
         }
         .toggle-btn:hover { background: rgba(0,112,242,0.1); }
-
-        /* Filter Tabs */
         .filter-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
         .filter-btn {
             padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
@@ -142,8 +128,6 @@
         .filter-btn.active { background: var(--sap-blue); color: white; border-color: var(--sap-blue); }
         .filter-btn .count { display: inline-block; background: rgba(0,0,0,0.1); padding: 1px 6px; border-radius: 10px; font-size: 10px; margin-left: 4px; }
         .filter-btn.active .count { background: rgba(255,255,255,0.3); }
-
-        /* Search */
         .search-bar { display: flex; gap: 10px; margin-bottom: 14px; align-items: center; }
         .search-input {
             padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
@@ -151,8 +135,6 @@
         }
         .search-input:focus { border-color: var(--sap-blue); }
         .search-input::placeholder { color: var(--text-secondary); }
-
-        /* Table */
         .table-wrap { background: var(--card-bg); border-radius: 10px; box-shadow: var(--card-shadow); overflow-x: auto; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; min-width: 900px; }
         thead { background: var(--sap-dark); color: white; }
@@ -161,7 +143,6 @@
         td { padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 12px; vertical-align: top; }
         tr:hover { background: rgba(0,112,242,0.04); }
         tr:last-child td { border-bottom: none; }
-
         tr.row-affected { background: rgba(211,47,47,0.06) !important; border-left: 3px solid var(--affected); }
         tr.row-safe { border-left: 3px solid transparent; }
         tr.row-maybe { background: rgba(245,124,0,0.06) !important; border-left: 3px solid var(--maybe); }
@@ -170,13 +151,11 @@
         tr.row-update { opacity: 0.85; }
         tr.row-update td:first-child { position: relative; }
         tr.row-update::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #8957e5; }
-
         .p-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; color: white; }
         .p-critical { background: var(--critical); }
         .p-high { background: var(--high); }
         .p-medium { background: var(--medium); color: #333; }
         .p-low { background: var(--low); }
-
         .impact-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; white-space: nowrap; }
         .impact-yes { background: rgba(211,47,47,0.12); color: #b71c1c; }
         .impact-no { background: rgba(56,142,60,0.12); color: #1b5e20; }
@@ -184,12 +163,10 @@
         [data-theme="dark"] .impact-yes { background: rgba(211,47,47,0.2); color: #ff6b6b; }
         [data-theme="dark"] .impact-no { background: rgba(56,142,60,0.2); color: #66bb6a; }
         [data-theme="dark"] .impact-maybe { background: rgba(245,124,0,0.2); color: #ffa726; }
-
         .cvss-bar { width: 55px; height: 4px; border-radius: 2px; background: rgba(0,0,0,0.08); overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 4px; }
         .cvss-fill { height: 100%; border-radius: 2px; }
         .cvss-num { font-weight: 700; font-size: 11px; }
         [data-theme="dark"] .cvss-bar { background: rgba(255,255,255,0.1); }
-
         .note-link { color: var(--sap-blue); text-decoration: none; font-weight: 600; }
         .note-link:hover { text-decoration: underline; }
         .cve-link { color: var(--text-secondary); font-family: monospace; font-size: 10px; }
@@ -197,24 +174,8 @@
         .our-ver { display: inline-block; background: rgba(56,142,60,0.1); color: #2e7d32; padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; margin: 1px 2px; white-space: nowrap; }
         [data-theme="dark"] .prod-tag { background: rgba(0,112,242,0.15); color: #58a6ff; }
         [data-theme="dark"] .our-ver { background: rgba(56,142,60,0.2); color: #66bb6a; }
-
-        /* Collapsible */
         .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
         .collapsible-content.open { max-height: 2000px; }
-
-        /* Hit cards */
-        .hit-card {
-            background: linear-gradient(135deg, rgba(211,47,47,0.04) 0%, var(--card-bg) 100%);
-            border: 1px solid rgba(211,47,47,0.2); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
-        }
-        .hit-card h4 { color: var(--affected); font-size: 13px; margin-bottom: 5px; }
-        .hit-card .detail { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
-        .hit-card .match-info { font-size: 11px; color: var(--text-secondary); margin-top: 5px; padding-top: 5px; border-top: 1px dashed rgba(211,47,47,0.2); }
-        .hit-card.maybe { background: linear-gradient(135deg, rgba(245,124,0,0.04) 0%, var(--card-bg) 100%); border-color: rgba(245,124,0,0.2); }
-        .hit-card.maybe h4 { color: var(--maybe); }
-        .hit-card.maybe .match-info { border-color: rgba(245,124,0,0.2); }
-
-        /* Accordion */
         .accordion { margin-bottom: 20px; }
         .acc-item { background: var(--card-bg); border-radius: 8px; margin-bottom: 6px; box-shadow: var(--card-shadow); overflow: hidden; border-left: 3px solid var(--affected); }
         .acc-item.acc-item-maybe { border-left-color: var(--maybe); }
@@ -231,8 +192,6 @@
         .acc-item.open .acc-arrow { transform: rotate(180deg); }
         .acc-body { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out, padding 0.25s; padding: 0 14px; }
         .acc-item.open .acc-body { max-height: 300px; padding: 0 14px 12px; }
-
-        /* Analysis */
         .analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
         .analysis-card { background: var(--card-bg); border-radius: 10px; padding: 16px; box-shadow: var(--card-shadow); }
         .analysis-card h3 { font-size: 13px; margin-bottom: 10px; color: var(--text-primary); }
@@ -241,12 +200,14 @@
         .sys-count { font-weight: 700; }
         .sys-count.hit { color: var(--affected); }
         .sys-count.ok { color: var(--safe); }
-
-        /* Footer */
         .footer { text-align: center; padding: 16px; color: var(--text-secondary); font-size: 11px; border-top: 1px solid var(--border); margin-top: 16px; }
-        .footer .highlight { color: var(--safe); font-weight: 600; }
-
-        /* Mobile */
+        .footer .highlight { color: var(--affected); font-weight: 600; }
+        .critical-alert {
+            background: linear-gradient(135deg, rgba(187,0,0,0.08) 0%, var(--card-bg) 100%);
+            border: 1px solid rgba(187,0,0,0.3); border-radius: 10px; padding: 16px; margin-bottom: 20px;
+        }
+        .critical-alert h3 { color: var(--critical); font-size: 14px; margin-bottom: 8px; }
+        .critical-alert .alert-item { font-size: 12px; margin-bottom: 4px; padding-left: 16px; }
         @media (max-width: 768px) {
             .header { padding: 16px 20px; }
             .header h1 { font-size: 17px; }
@@ -299,16 +260,15 @@
 })();
 </script>
 
-
 <div class="header">
     <div class="header-top">
         <div>
-            <h1>🔒 SAP Security Patch Day - May 2026</h1>
-            <div class="subtitle">2026年5月 · 基于实际系统版本交叉比对 · support.sap.com</div>
+            <h1>🔴 SAP Security Patch Day - June 2026</h1>
+            <div class="subtitle">2026年6月 · 基于实际系统版本交叉比对 · 数据源: SecurityBridge/cybersecuritynews/BleepingComputer</div>
         </div>
         <div class="header-badges">
-            <span class="badge">2026-05-13 Patch Day</span>
-            <span class="badge badge-alert">⚠ 6 条需关注</span>
+            <span class="badge">2026-06-09 Patch Day</span>
+            <span class="badge badge-alert">🔴 2 Critical 影响本系统!</span>
             <button class="theme-toggle" onclick="toggleTheme()" title="切换深色模式">🌙</button>
         </div>
     </div>
@@ -316,28 +276,36 @@
 
 <div class="container">
 
-    <!-- Stats -->
-    <div class="stats-row">
-        <div class="stat-card"><div class="number">15+2</div><div class="label">总补丁数</div></div>
-        <div class="stat-card critical"><div class="number">2</div><div class="label">Critical</div></div>
-        <div class="stat-card high"><div class="number">1</div><div class="label">High</div></div>
-        <div class="stat-card medium"><div class="number">13</div><div class="label">Medium</div></div>
-        <div class="stat-card low"><div class="number">1</div><div class="label">Low</div></div>
-        <div class="stat-card affected"><div class="number">7</div><div class="label">影响本系统</div></div>
-        <div class="stat-card safe"><div class="number">9</div><div class="label">不影响</div></div>
+    <!-- Critical Alert Banner -->
+    <div class="critical-alert">
+        <h3>🚨 紧急：2个Critical漏洞直接影响本系统ABAP层</h3>
+        <div class="alert-item">⚠️ <strong>CVE-2026-44748 (CVSS 9.9)</strong> — SAML认证绕过，SAP_BASIS 702-919 受影响，我们 754 在范围内</div>
+        <div class="alert-item">⚠️ <strong>CVE-2026-27671 (CVSS 9.8)</strong> — ABAP内核RFC内存损坏，无需认证即可利用，需内核升级</div>
+        <div class="alert-item">⚡ <strong>CVE-2026-44751 (CVSS 7.1)</strong> — ABAP缺失授权检查，SAP_BASIS 700-816 受影响</div>
     </div>
 
-    <!-- Charts (Pure CSS, no external deps) -->
+    <!-- Stats -->
+    <div class="stats-row">
+        <div class="stat-card"><div class="number">15+5</div><div class="label">总补丁数</div></div>
+        <div class="stat-card critical"><div class="number">4</div><div class="label">Critical</div></div>
+        <div class="stat-card high"><div class="number">2</div><div class="label">High</div></div>
+        <div class="stat-card medium"><div class="number">7</div><div class="label">Medium</div></div>
+        <div class="stat-card low"><div class="number">2</div><div class="label">Low</div></div>
+        <div class="stat-card affected"><div class="number">3</div><div class="label">影响本系统</div></div>
+        <div class="stat-card safe"><div class="number">6</div><div class="label">安全</div></div>
+    </div>
+
+    <!-- Charts -->
     <div class="charts-row">
         <div class="chart-card">
-            <h3>📊 优先级分布</h3>
+            <h3>📊 优先级分布 (15条新补丁)</h3>
             <div class="donut-wrap">
-                <div class="donut"><div class="donut-hole">17</div></div>
+                <div class="donut"><div class="donut-hole">15</div></div>
                 <div class="donut-legend">
-                    <div class="legend-item"><span class="legend-dot" style="background:var(--critical)"></span>Critical<span class="legend-val" style="color:var(--critical)">2</span></div>
-                    <div class="legend-item"><span class="legend-dot" style="background:var(--high)"></span>High<span class="legend-val" style="color:var(--high)">1</span></div>
-                    <div class="legend-item"><span class="legend-dot" style="background:var(--medium)"></span>Medium<span class="legend-val" style="color:var(--medium)">13</span></div>
-                    <div class="legend-item"><span class="legend-dot" style="background:var(--low)"></span>Low<span class="legend-val" style="color:var(--low)">1</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:var(--critical)"></span>Critical<span class="legend-val" style="color:var(--critical)">4</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:var(--high)"></span>High<span class="legend-val" style="color:var(--high)">2</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:var(--medium)"></span>Medium<span class="legend-val" style="color:var(--medium)">7</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:var(--low)"></span>Low<span class="legend-val" style="color:var(--low)">2</span></div>
                 </div>
             </div>
         </div>
@@ -346,21 +314,21 @@
             <div class="bar-chart">
                 <div class="bar-item">
                     <span class="bar-label" style="color:var(--affected)">受影响</span>
-                    <div class="bar-track"><div class="bar-fill" style="width:41%;background:var(--affected)">7</div></div>
+                    <div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--affected)">3</div></div>
                 </div>
                 <div class="bar-item">
                     <span class="bar-label" style="color:var(--maybe)">待确认</span>
-                    <div class="bar-track"><div class="bar-fill" style="width:6%;background:var(--maybe)">1</div></div>
+                    <div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--maybe)">6</div></div>
                 </div>
                 <div class="bar-item">
                     <span class="bar-label" style="color:var(--safe)">安全</span>
-                    <div class="bar-track"><div class="bar-fill" style="width:53%;background:var(--safe)">9</div></div>
+                    <div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--safe)">6</div></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Component Versions (Collapsible) -->
+    <!-- Component Versions -->
     <div class="section-title">
         🖥️ 系统组件版本
         <button class="toggle-btn" onclick="toggleCollapse('compTable')">展开 ▼</button>
@@ -397,10 +365,10 @@
         <input type="text" class="search-input" id="searchInput" placeholder="搜索 Note# / CVE / 关键词..." oninput="filterTable()">
     </div>
     <div class="filter-bar">
-        <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">全部<span class="count">17</span></button>
-        <button class="filter-btn" data-filter="affected" onclick="setFilter('affected',this)">⚠ 受影响<span class="count">7</span></button>
-        <button class="filter-btn" data-filter="maybe" onclick="setFilter('maybe',this)">❓ 待确认<span class="count">1</span></button>
-        <button class="filter-btn" data-filter="safe" onclick="setFilter('safe',this)">✓ 安全<span class="count">9</span></button>
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">全部<span class="count">15</span></button>
+        <button class="filter-btn" data-filter="affected" onclick="setFilter('affected',this)">⚠ 受影响<span class="count">3</span></button>
+        <button class="filter-btn" data-filter="maybe" onclick="setFilter('maybe',this)">❓ 待确认<span class="count">6</span></button>
+        <button class="filter-btn" data-filter="safe" onclick="setFilter('safe',this)">✓ 安全<span class="count">6</span></button>
     </div>
 
     <div class="table-wrap">
@@ -409,177 +377,207 @@
                 <tr><th>状态</th><th>Note#</th><th>CVE</th><th>漏洞 & 产品</th><th>优先级</th><th>CVSS</th><th>受影响版本</th><th>匹配详情</th></tr>
             </thead>
             <tbody>
-                <!-- AFFECTED first -->
+                <!-- AFFECTED -->
                 <tr class="row-affected" data-type="affected">
                     <td><span class="impact-badge impact-yes">⚠ 影响</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3730019" target="_blank">3730019</a></td>
-                    <td><span class="cve-link">CVE-2026-40135</span></td>
-                    <td><strong>OS 命令注入</strong><br><small>NetWeaver AS ABAP</small></td>
-                    <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:65%;background:var(--medium)"></div></div><span class="cvss-num">6.5</span></td>
-                    <td><span class="prod-tag">SAP_BASIS 700-758</span></td>
-                    <td><span class="our-ver">SAP_BASIS 750</span> 在范围内 → <strong style="color:red">需打补丁</strong></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3746332" target="_blank">3746332</a></td>
+                    <td><span class="cve-link">CVE-2026-44748</span></td>
+                    <td><strong>SAML认证XML签名绕过</strong><br><small>NW AS ABAP / ABAP Platform</small></td>
+                    <td><span class="p-badge p-critical">Critical</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:99%;background:var(--critical)"></div></div><span class="cvss-num">9.9</span></td>
+                    <td><span class="prod-tag">SAP_BASIS 702-919</span></td>
+                    <td><span class="our-ver">SAP_BASIS 754</span> 在范围内 → <strong style="color:red">紧急修复!</strong></td>
                 </tr>
                 <tr class="row-affected" data-type="affected">
                     <td><span class="impact-badge impact-yes">⚠ 影响</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3727717" target="_blank">3727717</a></td>
-                    <td><span class="cve-link">CVE-2026-40137</span></td>
-                    <td><strong>XSS 跨站脚本</strong><br><small>BSP (TAF_APPLAUNCHER)</small></td>
-                    <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:61%;background:var(--medium)"></div></div><span class="cvss-num">6.1</span></td>
-                    <td><span class="prod-tag">ST-PI 740</span></td>
-                    <td><span class="our-ver">ST-PI 740</span> 完全匹配 → <strong style="color:red">需打补丁</strong></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3717897" target="_blank">3717897</a></td>
+                    <td><span class="cve-link">CVE-2026-27671</span></td>
+                    <td><strong>ABAP内核RFC内存损坏</strong><br><small>NW AS ABAP (无需认证)</small></td>
+                    <td><span class="p-badge p-critical">Critical</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:98%;background:var(--critical)"></div></div><span class="cvss-num">9.8</span></td>
+                    <td><span class="prod-tag">KRNL64NUC/UC, KERNEL</span></td>
+                    <td>所有ABAP系统受影响 → <strong style="color:red">需内核升级!</strong></td>
                 </tr>
                 <tr class="row-affected" data-type="affected">
                     <td><span class="impact-badge impact-yes">⚠ 影响</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3728690" target="_blank">3728690</a></td>
-                    <td><span class="cve-link">CVE-2026-27682</span></td>
-                    <td><strong>反射型 XSS</strong><br><small>NetWeaver AS ABAP (BSP)</small></td>
-                    <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:47%;background:var(--medium)"></div></div><span class="cvss-num">4.7</span></td>
-                    <td><span class="prod-tag">SAP_BASIS 700-758</span></td>
-                    <td><span class="our-ver">SAP_BASIS 750</span> 在范围内 → <strong style="color:red">需打补丁</strong></td>
-                </tr>
-                <tr class="row-affected" data-type="affected">
-                    <td><span class="impact-badge impact-yes">⚠ 影响</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3721959" target="_blank">3721959</a></td>
-                    <td><span class="cve-link">CVE-2026-40132</span></td>
-                    <td><strong>缺失授权检查</strong><br><small>SEM-BW (BSP Scorecard)</small></td>
-                    <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:54%;background:var(--medium)"></div></div><span class="cvss-num">5.4</span></td>
-                    <td><span class="prod-tag">SEM-BW 736-749</span></td>
-                    <td><span class="our-ver">SEM-BW 748</span> 在范围内 → <strong style="color:red">需打补丁</strong></td>
-                </tr>
-                <tr class="row-affected" data-type="affected">
-                    <td><span class="impact-badge impact-yes">⚠ 影响</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3718508" target="_blank">3718508</a></td>
-                    <td><span class="cve-link">CVE-2026-40134</span></td>
-                    <td><strong>缺失授权检查</strong><br><small>ICM (Incentive Mgmt)</small></td>
-                    <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:43%;background:var(--medium)"></div></div><span class="cvss-num">4.3</span></td>
-                    <td><span class="prod-tag">SAP_APPL 618</span></td>
-                    <td><span class="our-ver">SAP_APPL 618</span> 完全匹配 → <strong style="color:red">需打补丁</strong></td>
-                </tr>
-                <tr class="row-affected" data-type="affected">
-                    <td><span class="impact-badge impact-yes">⚠ 影响</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3735359" target="_blank">3735359</a></td>
-                    <td><span class="cve-link">CVE-2026-40129</span></td>
-                    <td><strong>代码注入</strong><br><small>AS ABAP (NetWeaver)</small></td>
-                    <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:43%;background:var(--medium)"></div></div><span class="cvss-num">4.3</span></td>
-                    <td><span class="prod-tag">SAP_BASIS 740-758</span></td>
-                    <td><span class="our-ver">SAP_BASIS 750</span> 在范围内 → <strong style="color:red">需打补丁</strong></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3735546" target="_blank">3735546</a></td>
+                    <td><span class="cve-link">CVE-2026-44751</span></td>
+                    <td><strong>缺失授权检查</strong><br><small>NW AS ABAP / ABAP Platform</small></td>
+                    <td><span class="p-badge p-high">High</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:71%;background:var(--high)"></div></div><span class="cvss-num">7.1</span></td>
+                    <td><span class="prod-tag">SAP_BASIS 700-816</span></td>
+                    <td><span class="our-ver">SAP_BASIS 754</span> 在范围内 → <strong style="color:red">需打补丁</strong></td>
                 </tr>
                 <!-- MAYBE -->
                 <tr class="row-maybe" data-type="maybe">
                     <td><span class="impact-badge impact-maybe">❓ 待确认</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3726583" target="_blank">3726583</a></td>
-                    <td><span class="cve-link">CVE-2026-34258</span></td>
-                    <td><strong>内容欺骗</strong><br><small>SAPUI5 (Search UI)</small></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3727078" target="_blank">3727078</a></td>
+                    <td><span class="cve-link">CVE-2026-40128</span></td>
+                    <td><strong>目录遍历(Web Container)</strong><br><small>NW AS Java</small></td>
+                    <td><span class="p-badge p-critical">Critical</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:90%;background:var(--critical)"></div></div><span class="cvss-num">9.0</span></td>
+                    <td><span class="prod-tag">ENGINEAPI 7.50</span></td>
+                    <td>需确认是否部署Java栈 → 若有则<strong style="color:var(--maybe)">紧急</strong></td>
+                </tr>
+                <tr class="row-maybe" data-type="maybe">
+                    <td><span class="impact-badge impact-maybe">❓ 待确认</span></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3748819" target="_blank">3748819</a></td>
+                    <td><span class="cve-link">CVE-2026-44754</span></td>
+                    <td><strong>ODP数据复制API缺失调用方识别</strong><br><small>ODP Data Replication APIs</small></td>
                     <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:47%;background:var(--medium)"></div></div><span class="cvss-num">4.7</span></td>
-                    <td><span class="prod-tag">SAPUI5 多版本</span></td>
-                    <td><span class="our-ver">SAP_UI 754</span> 需确认 SAPUI5 子版本</td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:66%;background:var(--medium)"></div></div><span class="cvss-num">6.6</span></td>
+                    <td><span class="prod-tag">BC-BW-ODP</span></td>
+                    <td>BW系统使用ODP，SAP-to-SAP不受限，需确认三方调用</td>
+                </tr>
+                <tr class="row-maybe" data-type="maybe">
+                    <td><span class="impact-badge impact-maybe">❓ 待确认</span></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3723655" target="_blank">3723655</a></td>
+                    <td><span class="cve-link">CVE-2026-44746</span></td>
+                    <td><strong>反射型XSS(JDBC Servlet)</strong><br><small>NW AS Java</small></td>
+                    <td><span class="p-badge p-medium">Medium</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:61%;background:var(--medium)"></div></div><span class="cvss-num">6.1</span></td>
+                    <td><span class="prod-tag">BW-BEX-UDI</span></td>
+                    <td>需确认是否部署Java栈</td>
+                </tr>
+                <tr class="row-maybe" data-type="maybe">
+                    <td><span class="impact-badge impact-maybe">❓ 待确认</span></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3673181" target="_blank">3673181</a></td>
+                    <td><span class="cve-link">CVE-2026-44750</span></td>
+                    <td><strong>缺失授权(Review Match Groups)</strong><br><small>SAP MDG</small></td>
+                    <td><span class="p-badge p-medium">Medium</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:43%;background:var(--medium)"></div></div><span class="cvss-num">4.3</span></td>
+                    <td><span class="prod-tag">CA-MDG-CMP-BP</span></td>
+                    <td><span class="our-ver">MDG_FND 752</span> 需确认是否使用MDG匹配组</td>
+                </tr>
+                <tr class="row-maybe" data-type="maybe">
+                    <td><span class="impact-badge impact-maybe">❓ 待确认</span></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3682699" target="_blank">3682699</a></td>
+                    <td><span class="cve-link">CVE-2026-24315</span></td>
+                    <td><strong>路径遍历(Fiori Launchpad)</strong><br><small>SAP Fiori</small></td>
+                    <td><span class="p-badge p-medium">Medium</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:42%;background:var(--medium)"></div></div><span class="cvss-num">4.2</span></td>
+                    <td><span class="prod-tag">CA-FLP-FE-COR</span></td>
+                    <td><span class="our-ver">SAP_UI 754</span> 需确认SAPUI5子版本，修UI5</td>
+                </tr>
+                <tr class="row-maybe" data-type="maybe">
+                    <td><span class="impact-badge impact-maybe">❓ 待确认</span></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3726899" target="_blank">3726899</a></td>
+                    <td><span class="cve-link">CVE-2025-68161</span></td>
+                    <td><strong>Log4j暴露</strong><br><small>NW AS Java</small></td>
+                    <td><span class="p-badge p-low">Low</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:33%;background:var(--low)"></div></div><span class="cvss-num">3.3</span></td>
+                    <td><span class="prod-tag">BC-JAS-SEC-UME</span></td>
+                    <td>需确认是否部署Java栈(低风险)</td>
                 </tr>
                 <!-- SAFE -->
                 <tr class="row-safe" data-type="safe">
                     <td><span class="impact-badge impact-no">✓ 安全</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3724838" target="_blank">3724838</a></td>
-                    <td><span class="cve-link">CVE-2026-34260</span></td>
-                    <td><strong>SQL 注入</strong><br><small>S/4HANA Enterprise Search</small></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3748262" target="_blank">3748262</a></td>
+                    <td><span class="cve-link">CVE-2026-22732</span></td>
+                    <td><strong>Spring Security漏洞</strong><br><small>Commerce Cloud & Data Hub</small></td>
                     <td><span class="p-badge p-critical">Critical</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:96%;background:var(--critical)"></div></div><span class="cvss-num">9.6</span></td>
-                    <td><span class="prod-tag">SAP_BASIS 751-758</span></td>
-                    <td>要求 ≥751，我们 <span class="our-ver">750</span> → 安全</td>
-                </tr>
-                <tr class="row-safe" data-type="safe">
-                    <td><span class="impact-badge impact-no">✓ 安全</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3733064" target="_blank">3733064</a></td>
-                    <td><span class="cve-link">CVE-2026-34263</span></td>
-                    <td><strong>缺失身份验证</strong><br><small>Commerce Cloud</small></td>
-                    <td><span class="p-badge p-critical">Critical</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:96%;background:var(--critical)"></div></div><span class="cvss-num">9.6</span></td>
-                    <td><span class="prod-tag">COM_CLOUD 2211</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:91%;background:var(--critical)"></div></div><span class="cvss-num">9.1</span></td>
+                    <td><span class="prod-tag">CEC-SCC-PLA-PL</span></td>
                     <td>未部署 Commerce Cloud → 安全</td>
                 </tr>
                 <tr class="row-safe" data-type="safe">
                     <td><span class="impact-badge impact-no">✓ 安全</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3732471" target="_blank">3732471</a></td>
-                    <td><span class="cve-link">CVE-2026-34259</span></td>
-                    <td><strong>OS 命令注入</strong><br><small>Forecasting & Replenishment</small></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3747484" target="_blank">3747484</a></td>
+                    <td><span class="cve-link">CVE-2026-29145</span></td>
+                    <td><strong>Apache Tomcat多漏洞</strong><br><small>Commerce Cloud</small></td>
                     <td><span class="p-badge p-high">High</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:82%;background:var(--high)"></div></div><span class="cvss-num">8.2</span></td>
-                    <td><span class="prod-tag">SCM 702-714</span></td>
-                    <td>未部署 SCM → 安全</td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:74%;background:var(--high)"></div></div><span class="cvss-num">7.4</span></td>
+                    <td><span class="prod-tag">HY_COM 2205, COM_CLOUD 2211</span></td>
+                    <td>未部署 Commerce Cloud → 安全</td>
                 </tr>
                 <tr class="row-safe" data-type="safe">
                     <td><span class="impact-badge impact-no">✓ 安全</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3718083" target="_blank">3718083</a></td>
-                    <td><span class="cve-link">CVE-2026-40133</span></td>
-                    <td><strong>缺失授权检查</strong><br><small>S/4HANA Condition Maint.</small></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3751691" target="_blank">3751691</a></td>
+                    <td><span class="cve-link">CVE-2026-44744</span></td>
+                    <td><strong>SQL注入</strong><br><small>S/4HANA</small></td>
                     <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:63%;background:var(--medium)"></div></div><span class="cvss-num">6.3</span></td>
-                    <td><span class="prod-tag">S4CORE 102-109</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:65%;background:var(--medium)"></div></div><span class="cvss-num">6.5</span></td>
+                    <td><span class="prod-tag">S4FND 102-109</span></td>
                     <td>非 S/4HANA → 安全</td>
                 </tr>
                 <tr class="row-safe" data-type="safe">
                     <td><span class="impact-badge impact-no">✓ 安全</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3667593" target="_blank">3667593</a></td>
-                    <td><span class="cve-link">CVE-2026-0502</span></td>
-                    <td><strong>CSRF</strong><br><small>BusinessObjects BI</small></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3715280" target="_blank">3715280</a></td>
+                    <td><span class="cve-link">CVE-2026-44757</span></td>
+                    <td><strong>XSS</strong><br><small>Wily Introscope EM</small></td>
                     <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:54%;background:var(--medium)"></div></div><span class="cvss-num">5.4</span></td>
-                    <td><span class="prod-tag">ENTERPRISE 430</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:47%;background:var(--medium)"></div></div><span class="cvss-num">4.7</span></td>
+                    <td><span class="prod-tag">SV-SMG-DIA-WLY</span></td>
+                    <td>未部署 Wily Introscope → 安全</td>
+                </tr>
+                <tr class="row-safe" data-type="safe">
+                    <td><span class="impact-badge impact-no">✓ 安全</span></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3687096" target="_blank">3687096</a></td>
+                    <td><span class="cve-link">CVE-2026-44755</span></td>
+                    <td><strong>邮件欺骗</strong><br><small>BusinessObjects BI</small></td>
+                    <td><span class="p-badge p-medium">Medium</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:43%;background:var(--medium)"></div></div><span class="cvss-num">4.3</span></td>
+                    <td><span class="prod-tag">BI-BIP-SEC</span></td>
                     <td>未部署 BO BI → 安全</td>
                 </tr>
                 <tr class="row-safe" data-type="safe">
                     <td><span class="impact-badge impact-no">✓ 安全</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3716450" target="_blank">3716450</a></td>
-                    <td><span class="cve-link">CVE-2025-68161</span></td>
-                    <td><strong>证书验证不当</strong><br><small>Commerce Cloud (Log4j)</small></td>
-                    <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:48%;background:var(--medium)"></div></div><span class="cvss-num">4.8</span></td>
-                    <td><span class="prod-tag">HY_COM 2205</span></td>
-                    <td>未部署 Commerce Cloud → 安全</td>
-                </tr>
-                <tr class="row-safe" data-type="safe">
-                    <td><span class="impact-badge impact-no">✓ 安全</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3713521" target="_blank">3713521</a></td>
-                    <td><span class="cve-link">CVE-2026-40136</span></td>
-                    <td><strong>拒绝服务 DoS</strong><br><small>Financial Consolidation</small></td>
-                    <td><span class="p-badge p-medium">Medium</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:43%;background:var(--medium)"></div></div><span class="cvss-num">4.3</span></td>
-                    <td><span class="prod-tag">FINANCE 1010</span></td>
-                    <td>未部署 → 安全</td>
-                </tr>
-                <tr class="row-safe" data-type="safe">
-                    <td><span class="impact-badge impact-no">✓ 安全</span></td>
-                    <td><a class="note-link" href="https://me.sap.com/notes/3726962" target="_blank">3726962</a></td>
-                    <td><span class="cve-link">CVE-2026-40131</span></td>
-                    <td><strong>SQL 注入</strong><br><small>HANA HDI Deployer</small></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3706000" target="_blank">3706000</a></td>
+                    <td><span class="cve-link">CVE-2026-44743</span></td>
+                    <td><strong>安全配置不当</strong><br><small>SAP Business Objects</small></td>
                     <td><span class="p-badge p-low">Low</span></td>
-                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:34%;background:var(--low)"></div></div><span class="cvss-num">3.4</span></td>
-                    <td><span class="prod-tag">XS_HDI_DEPLOYER 1.00</span></td>
-                    <td>未部署 HDI → 安全</td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:37%;background:var(--low)"></div></div><span class="cvss-num">3.7</span></td>
+                    <td><span class="prod-tag">BI-BIP-CMC</span></td>
+                    <td>未部署 BO → 安全</td>
                 </tr>
                 <!-- UPDATE 分隔 -->
-                <tr style="background:linear-gradient(90deg,#8957e5 0%,#6e40c9 100%);"><td colspan="8" style="padding:10px 14px;color:white;font-size:12px;font-weight:600;text-align:left;">📌 补丁日后更新 — 2 previously released security notes were updated after the scheduled monthly patch day</td></tr>
+                <tr style="background:linear-gradient(90deg,#8957e5 0%,#6e40c9 100%);"><td colspan="8" style="padding:10px 14px;color:white;font-size:12px;font-weight:600;text-align:left;">📌 补丁日间更新 — 5 previously released security notes were updated before the scheduled monthly patch day</td></tr>
                 <!-- UPDATE entries -->
+                <tr class="row-safe row-update" data-type="safe">
+                    <td><span class="impact-badge impact-no">✓ 安全</span></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3747787" target="_blank">3747787</a><span style="background:#8957e5;color:white;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;">UPDATE</span></td>
+                    <td><span class="cve-link">-</span></td>
+                    <td><strong>恶意npm包(CAP & MTA)</strong><br><small>新增恶意包识别</small></td>
+                    <td><span class="p-badge p-critical">HotNews</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:100%;background:var(--critical)"></div></div><span class="cvss-num">10.0</span></td>
+                    <td><span class="prod-tag">BC-XS-CDX-NJS</span></td>
+                    <td>未使用 CAP/MTA → 安全</td>
+                </tr>
                 <tr class="row-safe row-update" data-type="safe">
                     <td><span class="impact-badge impact-no">✓ 安全</span></td>
                     <td><a class="note-link" href="https://me.sap.com/notes/3733064" target="_blank">3733064</a><span style="background:#8957e5;color:white;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;">UPDATE</span></td>
                     <td><span class="cve-link">CVE-2026-34263</span></td>
-                    <td><strong>缺失认证检查 (更新)</strong><br><small>Commerce Cloud configuration 更新</small></td>
-                    <td><span class="p-badge p-critical">Critical</span></td>
+                    <td><strong>Commerce Cloud缺失认证(更新)</strong><br><small>仅文字更新</small></td>
+                    <td><span class="p-badge p-critical">HotNews</span></td>
                     <td><div class="cvss-bar"><div class="cvss-fill" style="width:96%;background:var(--critical)"></div></div><span class="cvss-num">9.6</span></td>
-                    <td><span class="prod-tag">HY_COM 2205</span><span class="prod-tag">COM_CLOUD 2211</span></td>
-                    <td>同原条目，未部署 → 安全</td>
+                    <td><span class="prod-tag">CEC-SCC-CDM-BO-APP</span></td>
+                    <td>未部署 Commerce Cloud → 安全</td>
+                </tr>
+                <tr class="row-safe row-update" data-type="safe">
+                    <td><span class="impact-badge impact-no">✓ 安全</span></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3732471" target="_blank">3732471</a><span style="background:#8957e5;color:white;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;">UPDATE</span></td>
+                    <td><span class="cve-link">CVE-2026-34259</span></td>
+                    <td><strong>OS命令注入(更新)</strong><br><small>F&R 更新SP信息</small></td>
+                    <td><span class="p-badge p-high">High</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:82%;background:var(--high)"></div></div><span class="cvss-num">8.2</span></td>
+                    <td><span class="prod-tag">SCM-FRE-FRP</span></td>
+                    <td>未部署 F&R → 安全</td>
+                </tr>
+                <tr class="row-maybe row-update" data-type="maybe">
+                    <td><span class="impact-badge impact-maybe">❓ 待确认</span></td>
+                    <td><a class="note-link" href="https://me.sap.com/notes/3433366" target="_blank">3433366</a><span style="background:#8957e5;color:white;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;">UPDATE</span></td>
+                    <td><span class="cve-link">CVE-2026-44749</span></td>
+                    <td><strong>信息泄露(SAP Gateway)</strong><br><small>OPU-GW-V4</small></td>
+                    <td><span class="p-badge p-medium">Medium</span></td>
+                    <td><div class="cvss-bar"><div class="cvss-fill" style="width:43%;background:var(--medium)"></div></div><span class="cvss-num">4.3</span></td>
+                    <td><span class="prod-tag">OPU-GW-V4</span></td>
+                    <td><span class="our-ver">SAP_GWFND 750</span> 需确认受影响版本范围</td>
                 </tr>
                 <tr class="row-affected row-update" data-type="affected">
                     <td><span class="impact-badge impact-yes">⚠ 影响</span></td>
                     <td><a class="note-link" href="https://me.sap.com/notes/3718508" target="_blank">3718508</a><span style="background:#8957e5;color:white;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;">UPDATE</span></td>
                     <td><span class="cve-link">CVE-2026-40134</span></td>
-                    <td><strong>缺失授权检查 (更新)</strong><br><small>ICM 更新补丁版本</small></td>
+                    <td><strong>缺失授权(ICM) 更新</strong><br><small>补丁版本更新</small></td>
                     <td><span class="p-badge p-medium">Medium</span></td>
                     <td><div class="cvss-bar"><div class="cvss-fill" style="width:43%;background:var(--medium)"></div></div><span class="cvss-num">4.3</span></td>
                     <td><span class="prod-tag">SAP_APPL 618</span></td>
@@ -589,91 +587,79 @@
         </table>
     </div>
 
-    <!-- Affected Detail Cards - Accordion -->
+    <!-- Accordion -->
     <div class="section-title">🔴 需处理的补丁详情</div>
     <div class="accordion">
         <div class="acc-item">
             <div class="acc-header" onclick="toggleAcc(this)">
-                <span class="acc-priority" style="background:var(--critical)">P1</span>
-                <span class="acc-title">Note 3730019 — OS 命令注入</span>
-                <span class="acc-cvss" style="color:var(--affected)">CVSS 6.5</span>
+                <span class="acc-priority" style="background:var(--critical)">P0</span>
+                <span class="acc-title">Note 3746332 — SAML认证XML签名绕过 (CVSS 9.9)</span>
+                <span class="acc-cvss" style="color:var(--affected)">最高优先级!</span>
                 <span class="acc-arrow">▼</span>
             </div>
             <div class="acc-body">
-                <div class="detail"><strong>攻击向量：</strong>攻击者可在服务器上执行任意 OS 命令，可能导致服务器被完全控制<br><strong>影响组件：</strong>SAP_BASIS <span class="our-ver">750</span> (范围 700-758)</div>
-                <div class="match-info">💡 本月内必须安装。OS 命令注入实际危害远超评分。</div>
+                <div class="detail"><strong>攻击向量：</strong>已认证低权限攻击者可篡改SAML XML签名，伪造身份信息获取未授权访问。影响范围极广(SAP_BASIS 702-919)。<br><strong>影响组件：</strong>SAP_BASIS <span class="our-ver">754</span> (范围 702-919)<br><strong>临时缓解：</strong>可禁用SAML认证(非永久方案)<br><strong>FAQ Note：</strong>3751245</div>
+                <div class="match-info">💡 本周内必须修复！SAML认证绕过=身份体系失守，攻击者可冒充任意用户。</div>
             </div>
         </div>
         <div class="acc-item">
             <div class="acc-header" onclick="toggleAcc(this)">
-                <span class="acc-priority" style="background:var(--high)">P2</span>
-                <span class="acc-title">Note 3727717 — XSS 跨站脚本</span>
-                <span class="acc-cvss" style="color:var(--affected)">CVSS 6.1</span>
+                <span class="acc-priority" style="background:var(--critical)">P0</span>
+                <span class="acc-title">Note 3717897 — ABAP内核RFC内存损坏 (CVSS 9.8)</span>
+                <span class="acc-cvss" style="color:var(--affected)">最高优先级!</span>
                 <span class="acc-arrow">▼</span>
             </div>
             <div class="acc-body">
-                <div class="detail"><strong>攻击向量：</strong>注入恶意脚本，窃取用户会话或执行未授权操作<br><strong>影响组件：</strong>ST-PI <span class="our-ver">740</span> 完全匹配</div>
-                <div class="match-info">💡 本月内安装。XSS 常被用于钓鱼攻击和会话劫持。</div>
+                <div class="detail"><strong>攻击向量：</strong>无需认证！攻击者发送特制RFC请求即可触发内核内存损坏，影响机密性、完整性、可用性。<br><strong>影响组件：</strong>所有ABAP系统内核 (KRNL64NUC/UC, KERNEL)<br><strong>修复方式：</strong>必须升级内核，无workaround<br><strong>FAQ Note：</strong>3746936</div>
+                <div class="match-info">💡 本周内必须修复！无认证+内核级=最危险组合。所有ABAP系统(CNP/CNQ/CED/SM5/SM6/SM4/LT1等)均需内核升级。</div>
             </div>
         </div>
         <div class="acc-item">
             <div class="acc-header" onclick="toggleAcc(this)">
-                <span class="acc-priority" style="background:var(--high)">P2</span>
-                <span class="acc-title">Note 3728690 — 反射型 XSS</span>
-                <span class="acc-cvss" style="color:var(--affected)">CVSS 4.7</span>
+                <span class="acc-priority" style="background:var(--high)">P1</span>
+                <span class="acc-title">Note 3735546 — ABAP缺失授权检查 (CVSS 7.1)</span>
+                <span class="acc-cvss" style="color:var(--affected)">CVSS 7.1</span>
                 <span class="acc-arrow">▼</span>
             </div>
             <div class="acc-body">
-                <div class="detail"><strong>攻击向量：</strong>通过 URL 参数注入恶意脚本<br><strong>影响组件：</strong>SAP_BASIS <span class="our-ver">750</span> (范围 700-758)</div>
-                <div class="match-info">💡 本月内安装。影响所有基于 BSP 的 Web 应用。</div>
-            </div>
-        </div>
-        <div class="acc-item">
-            <div class="acc-header" onclick="toggleAcc(this)">
-                <span class="acc-priority" style="background:var(--medium);color:#333">P3</span>
-                <span class="acc-title">Note 3721959 — 缺失授权 SEM-BW</span>
-                <span class="acc-cvss" style="color:var(--high)">CVSS 5.4</span>
-                <span class="acc-arrow">▼</span>
-            </div>
-            <div class="acc-body">
-                <div class="detail"><strong>攻击向量：</strong>未授权用户可能访问敏感的平衡计分卡数据<br><strong>影响组件：</strong>SEM-BW <span class="our-ver">748</span> (范围 736-749)</div>
-                <div class="match-info">💡 下个维护窗口安装。如使用平衡计分卡功能则需重点关注。</div>
-            </div>
-        </div>
-        <div class="acc-item">
-            <div class="acc-header" onclick="toggleAcc(this)">
-                <span class="acc-priority" style="background:var(--medium);color:#333">P3</span>
-                <span class="acc-title">Note 3718508 — 缺失授权 ICM</span>
-                <span class="acc-cvss" style="color:var(--high)">CVSS 4.3</span>
-                <span class="acc-arrow">▼</span>
-            </div>
-            <div class="acc-body">
-                <div class="detail"><strong>攻击向量：</strong>未授权访问激励与佣金管理数据<br><strong>影响组件：</strong>SAP_APPL <span class="our-ver">618</span> 完全匹配</div>
-                <div class="match-info">💡 下个维护窗口安装。此 note 有 UPDATE 补丁，请使用最新版本。</div>
-            </div>
-        </div>
-        <div class="acc-item">
-            <div class="acc-header" onclick="toggleAcc(this)">
-                <span class="acc-priority" style="background:var(--medium);color:#333">P3</span>
-                <span class="acc-title">Note 3735359 — 代码注入</span>
-                <span class="acc-cvss" style="color:var(--high)">CVSS 4.3</span>
-                <span class="acc-arrow">▼</span>
-            </div>
-            <div class="acc-body">
-                <div class="detail"><strong>攻击向量：</strong>攻击者可能在 ABAP 运行环境中注入恶意代码<br><strong>影响组件：</strong>SAP_BASIS <span class="our-ver">750</span> (范围 740-758)</div>
-                <div class="match-info">💡 下个维护窗口安装。代码注入利用条件较复杂，但一旦成功后果严重。</div>
+                <div class="detail"><strong>攻击向量：</strong>低权限网络攻击者可绕过授权，实现高完整性影响<br><strong>影响组件：</strong>SAP_BASIS <span class="our-ver">754</span> (范围 700-816)</div>
+                <div class="match-info">💡 本月维护窗口安装。与P0补丁一起打更高效。</div>
             </div>
         </div>
         <div class="acc-item acc-item-maybe">
             <div class="acc-header" onclick="toggleAcc(this)">
                 <span class="acc-priority" style="background:var(--maybe)">待定</span>
-                <span class="acc-title">Note 3726583 — SAPUI5 内容欺骗</span>
-                <span class="acc-cvss" style="color:var(--maybe)">CVSS 4.7</span>
+                <span class="acc-title">Note 3727078 — AS Java目录遍历 (CVSS 9.0)</span>
+                <span class="acc-cvss" style="color:var(--maybe)">CVSS 9.0</span>
                 <span class="acc-arrow">▼</span>
             </div>
             <div class="acc-body">
-                <div class="detail"><strong>攻击向量：</strong>攻击者可欺骗 UI 显示虚假内容<br><strong>影响组件：</strong>SAP_UI <span class="our-ver">754</span> → 需对照 SAPUI5 子版本确认</div>
-                <div class="match-info">💡 请查阅 Note 3726583 确认受影响版本范围，可用事务码 /UI5/INFO 查看版本。</div>
+                <div class="detail"><strong>攻击向量：</strong>网络攻击者可通过恶意HTTP请求访问服务器文件系统<br><strong>影响组件：</strong>ENGINEAPI 7.50 (NW AS Java)<br><strong>确认方法：</strong>检查是否有Java Stack部署(如GRC系统)</div>
+                <div class="match-info">💡 如有Java栈则按Critical优先级处理！检查SM50进程类型或ICM端口确认。</div>
+            </div>
+        </div>
+        <div class="acc-item acc-item-maybe">
+            <div class="acc-header" onclick="toggleAcc(this)">
+                <span class="acc-priority" style="background:var(--maybe)">待定</span>
+                <span class="acc-title">Note 3748819 — ODP API调用方识别 (CVSS 6.6)</span>
+                <span class="acc-cvss" style="color:var(--maybe)">CVSS 6.6</span>
+                <span class="acc-arrow">▼</span>
+            </div>
+            <div class="acc-body">
+                <div class="detail"><strong>攻击向量：</strong>SAP收紧ODP API使用限制，仅允许SAP-to-SAP<br><strong>影响组件：</strong>BC-BW-ODP<br><strong>注意：</strong>如果第三方工具通过ODP抽数，升级后可能中断</div>
+                <div class="match-info">💡 ECC→BW的ODP不受影响，但需确认是否有非SAP系统使用ODP API。</div>
+            </div>
+        </div>
+        <div class="acc-item acc-item-maybe">
+            <div class="acc-header" onclick="toggleAcc(this)">
+                <span class="acc-priority" style="background:var(--maybe)">待定</span>
+                <span class="acc-title">Note 3682699 — Fiori Launchpad路径遍历 (CVSS 4.2)</span>
+                <span class="acc-cvss" style="color:var(--maybe)">CVSS 4.2</span>
+                <span class="acc-arrow">▼</span>
+            </div>
+            <div class="acc-body">
+                <div class="detail"><strong>攻击向量：</strong>Fiori Launchpad路径遍历漏洞，修复需更新UI5<br><strong>影响组件：</strong>SAP_UI <span class="our-ver">754</span>，需确认SAPUI5子版本<br><strong>确认方法：</strong>/UI5/INFO 查看当前SAPUI5版本</div>
+                <div class="match-info">💡 UI5补丁方式不同于普通Note，参考Note 3155948操作指南。</div>
             </div>
         </div>
     </div>
@@ -683,22 +669,24 @@
     <div class="analysis-grid">
         <div class="analysis-card">
             <h3>按受影响组件分类</h3>
-            <div class="sys-item"><span>SAP_BASIS 750</span><span class="sys-count hit">3 条命中</span></div>
-            <div class="sys-item"><span>ST-PI 740</span><span class="sys-count hit">1 条命中</span></div>
-            <div class="sys-item"><span>SAP_APPL 618</span><span class="sys-count hit">2 条命中</span></div>
-            <div class="sys-item"><span>SEM-BW 748</span><span class="sys-count hit">1 条命中</span></div>
-            <div class="sys-item"><span>SAP_UI 754</span><span class="sys-count hit">1 条待确认</span></div>
-            <div class="sys-item"><span>未部署产品</span><span class="sys-count ok">5 个安全</span></div>
+            <div class="sys-item"><span>SAP_BASIS 754</span><span class="sys-count hit">3 条命中 (含2 Critical!)</span></div>
+            <div class="sys-item"><span>ABAP内核 (全系统)</span><span class="sys-count hit">1 条 (CVSS 9.8)</span></div>
+            <div class="sys-item"><span>SAP_APPL 618</span><span class="sys-count hit">1 条 (5月更新)</span></div>
+            <div class="sys-item"><span>NW AS Java</span><span class="sys-count" style="color:var(--maybe)">3 条待确认</span></div>
+            <div class="sys-item"><span>ODP/BW</span><span class="sys-count" style="color:var(--maybe)">1 条待确认</span></div>
+            <div class="sys-item"><span>MDG / SAP_UI</span><span class="sys-count" style="color:var(--maybe)">2 条待确认</span></div>
+            <div class="sys-item"><span>未部署产品</span><span class="sys-count ok">6 个安全</span></div>
         </div>
         <div class="analysis-card">
             <h3>按漏洞类型分类</h3>
-            <div class="sys-item"><span>🔥 OS 命令注入</span><span class="sys-count hit">1 条</span></div>
-            <div class="sys-item"><span>⚡ XSS 跨站脚本</span><span class="sys-count hit">2 条</span></div>
-            <div class="sys-item"><span>🔐 缺失授权检查</span><span class="sys-count hit">3 条</span></div>
-            <div class="sys-item"><span>💉 代码注入</span><span class="sys-count hit">1 条</span></div>
-            <div class="sys-item"><span>🎭 内容欺骗</span><span class="sys-count" style="color:var(--maybe)">1 条待确认</span></div>
+            <div class="sys-item"><span>🔥 认证绕过(SAML)</span><span class="sys-count hit">1 条 (CVSS 9.9)</span></div>
+            <div class="sys-item"><span>💥 内存损坏(RFC)</span><span class="sys-count hit">1 条 (CVSS 9.8)</span></div>
+            <div class="sys-item"><span>🔐 缺失授权检查</span><span class="sys-count hit">2 条</span></div>
+            <div class="sys-item"><span>📂 目录/路径遍历</span><span class="sys-count" style="color:var(--maybe)">2 条待确认</span></div>
+            <div class="sys-item"><span>🔗 ODP API收紧</span><span class="sys-count" style="color:var(--maybe)">1 条待确认</span></div>
+            <div class="sys-item"><span>💉 XSS / Log4j</span><span class="sys-count" style="color:var(--maybe)">2 条待确认</span></div>
             <hr style="margin:8px 0;border:none;border-top:1px dashed var(--border);">
-            <div style="font-size:12px;color:var(--safe);padding-top:4px;"><strong>✅ 好消息：</strong>2 个 Critical 漏洞均不影响本系统！</div>
+            <div style="font-size:12px;color:var(--affected);padding-top:4px;"><strong>⚠️ 本月严重性远超5月：</strong>2个Critical直接影响ABAP层！上月0个Critical命中。</div>
         </div>
     </div>
 
@@ -708,20 +696,22 @@
         <table>
             <thead><tr><th>优先级</th><th>Note#</th><th>操作建议</th><th>建议时间</th></tr></thead>
             <tbody>
-                <tr style="background:rgba(211,47,47,0.06);"><td><span class="p-badge p-critical">P1</span></td><td><strong>3730019</strong></td><td>OS命令注入 — SAP_BASIS 750 受影响</td><td>本周内</td></tr>
-                <tr style="background:rgba(245,124,0,0.06);"><td><span class="p-badge p-high">P2</span></td><td><strong>3727717, 3728690</strong></td><td>两个 XSS — ST-PI 740 和 SAP_BASIS 750</td><td>本月维护窗口</td></tr>
-                <tr><td><span class="p-badge p-medium">P3</span></td><td><strong>3721959, 3718508, 3735359</strong></td><td>授权/注入 — SEM-BW、SAP_APPL、SAP_BASIS</td><td>下月维护窗口</td></tr>
-                <tr style="background:rgba(245,124,0,0.04);"><td><span class="p-badge p-low">待定</span></td><td><strong>3726583</strong></td><td>SAPUI5 内容欺骗 — 确认版本后决定</td><td>确认后</td></tr>
-                <tr style="background:rgba(56,142,60,0.06);"><td><span style="background:var(--safe);color:white;" class="p-badge">跳过</span></td><td><strong>其余 10 条</strong></td><td>产品未部署或版本不在范围</td><td>-</td></tr>
+                <tr style="background:rgba(211,47,47,0.08);"><td><span class="p-badge p-critical">P0</span></td><td><strong>3746332</strong></td><td>SAML签名绕过(CVSS 9.9) — SAP_BASIS 754，临时可禁SAML</td><td>🔴 本周内!</td></tr>
+                <tr style="background:rgba(211,47,47,0.08);"><td><span class="p-badge p-critical">P0</span></td><td><strong>3717897</strong></td><td>ABAP内核RFC内存损坏(CVSS 9.8) — 需全系统内核升级，无workaround</td><td>🔴 本周内!</td></tr>
+                <tr style="background:rgba(245,124,0,0.06);"><td><span class="p-badge p-high">P1</span></td><td><strong>3735546</strong></td><td>缺失授权(CVSS 7.1) — SAP_BASIS 754，建议与P0一起打</td><td>本月维护窗口</td></tr>
+                <tr style="background:rgba(245,124,0,0.04);"><td><span class="p-badge p-medium">待定</span></td><td><strong>3727078</strong></td><td>Java目录遍历(CVSS 9.0) — 先确认是否有Java栈</td><td>确认后</td></tr>
+                <tr><td><span class="p-badge p-medium">待定</span></td><td><strong>3748819</strong></td><td>ODP API收紧(CVSS 6.6) — 确认非SAP使用场景</td><td>确认后</td></tr>
+                <tr><td><span class="p-badge p-medium">待定</span></td><td><strong>3682699, 3673181</strong></td><td>Fiori路径遍历/MDG授权 — 确认版本后决定</td><td>确认后</td></tr>
+                <tr style="background:rgba(56,142,60,0.06);"><td><span style="background:var(--safe);color:white;" class="p-badge">跳过</span></td><td><strong>其余 6+3 条</strong></td><td>产品未部署(Commerce Cloud/S4/BO等)或版本不在范围</td><td>-</td></tr>
             </tbody>
         </table>
     </div>
 </div>
 
 <div class="footer">
-    <p>由 QClaw 自动生成 · 数据来源: SAP Support Portal · 版本比对基于软件组件版本文件</p>
-    <p>生成时间: 2026-05-16 · 此报告仅供安全参考，请以 SAP 官方 Security Note 为准</p>
-    <p class="highlight">⚡ 关键发现：17 条补丁中仅 7 条影响本系统，2 个 Critical 均不影响！</p>
+    <p>由 QClaw 自动生成 · 数据来源: SecurityBridge / cybersecuritynews / BleepingComputer · 版本比对基于软件组件版本文件</p>
+    <p>生成时间: 2026-06-11 · 此报告仅供安全参考，请以 SAP 官方 Security Note 为准</p>
+    <p class="highlight">🔴 关键发现：15条新补丁中2个Critical直接影响本系统ABAP层！SAML认证绕过+RFC内存损坏需紧急修复！</p>
 </div>
 
 <script>
